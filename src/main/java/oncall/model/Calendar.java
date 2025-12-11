@@ -1,5 +1,6 @@
 package oncall.model;
 
+import oncall.exception.InvalidCalendarPropertyFormatException;
 import oncall.exception.InvalidDayOfWeekException;
 
 import java.time.DateTimeException;
@@ -12,7 +13,7 @@ public class Calendar {
     private final Month month;
     private final DayOfWeekKOR firstDayOfMonth;
 
-    public Calendar(Month month, DayOfWeekKOR firstDayOfMonth) {
+    private Calendar(Month month, DayOfWeekKOR firstDayOfMonth) {
         this.month = month;
         this.firstDayOfMonth = firstDayOfMonth;
     }
@@ -23,7 +24,7 @@ public class Calendar {
             DayOfWeekKOR dayOfWeek = DayOfWeekKOR.of(firstDayOfMonth);
             return new Calendar(month, dayOfWeek);
         } catch (DateTimeException | InvalidDayOfWeekException e) {
-            throw new IllegalArgumentException(e);
+            throw new InvalidCalendarPropertyFormatException();
         }
     }
 }

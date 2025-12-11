@@ -1,6 +1,6 @@
 package oncall.exception;
 
-public class InvalidDayOfWeekException extends IllegalArgumentException {
+public class InvalidDayOfWeekException extends RuntimeException {
     public InvalidDayOfWeekException() {
         super();
     }
