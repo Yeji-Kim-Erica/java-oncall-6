@@ -39,4 +39,8 @@ public enum MonthKOR {
     public int lastDateOfMonth() {
         return finalDate;
     }
+
+    public boolean isHoliday(int date) {
+        return publicHolidays.contains(date);
+    }
 }

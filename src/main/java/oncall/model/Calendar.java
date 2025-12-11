@@ -25,6 +25,14 @@ public class Calendar {
         return dayOfMonth.get(date - 1);
     }
 
+    public int getLastDateOfMonth() {
+        return month.lastDateOfMonth();
+    }
+
+    public boolean isHoliday(int date) {
+        return month.isHoliday(date);
+    }
+
     private List<DayOfWeekKOR> matchDayWithDate(DayOfWeekKOR firstDayOfMonth) {
         List<DayOfWeekKOR> daysOfMonth = new ArrayList<>();
         List<DayOfWeekKOR> dayOfWeek = List.of(DayOfWeekKOR.values());

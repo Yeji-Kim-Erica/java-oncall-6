@@ -36,6 +36,7 @@ public class CalendarTest {
 
             // then
             assertThat(calendar.getDayOfMonth(11)).isEqualTo(DayOfWeekKOR.THURS);
+            assertThat(calendar.getDayOfMonth(31)).isEqualTo(DayOfWeekKOR.WEDS);
         }
     }
 

@@ -26,6 +26,14 @@ public class Workers {
         return new Workers(workers);
     }
 
+    public int size() {
+        return workers.size();
+    }
+
+    public Worker get(int index) {
+        return workers.get(index);
+    }
+
     private static void validate(List<String> namesOfWorkers) {
         validateNumOfWorkers(namesOfWorkers.size());
         validateDuplicatedNicknames(namesOfWorkers);
