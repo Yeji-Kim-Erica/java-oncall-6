@@ -1,6 +1,7 @@
 package oncall.model;
 
-import oncall.exception.InvalidCalendarPropertyFormatException;
+import oncall.exception.InvalidDayOfWeekException;
+import oncall.exception.InvalidMonthException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,20 @@ public class CalendarTest {
             assertThat(Calendar.of(month, dayOfWeek)).isNotNull()
                     .isInstanceOf(Calendar.class);
         }
+
+        @DisplayName("날짜에 해당하는 요일 정보를 반환한다")
+        @Test
+        void should_Return_DayInfo() {
+            // given
+            int month = 12;
+            String dayOfWeek = "월";
+
+            // when
+            Calendar calendar = Calendar.of(month, dayOfWeek);
+
+            // then
+            assertThat(calendar.getDayOfMonth(11)).isEqualTo(DayOfWeekKOR.THURS);
+        }
     }
 
     @Nested
@@ -35,7 +50,7 @@ public class CalendarTest {
 
             // when & then
             assertThatThrownBy(() -> Calendar.of(month, dayOfWeek))
-                    .isInstanceOf(InvalidCalendarPropertyFormatException.class);
+                    .isInstanceOf(InvalidMonthException.class);
         }
 
         @DisplayName("월~일의 요일 정보를 입력하지 않으면 예외가 발생한다")
@@ -47,7 +62,7 @@ public class CalendarTest {
 
             // when & then
             assertThatThrownBy(() -> Calendar.of(month, dayOfWeek))
-                    .isInstanceOf(InvalidCalendarPropertyFormatException.class);
+                    .isInstanceOf(InvalidDayOfWeekException.class);
         }
 
     }

@@ -6,18 +6,20 @@ import oncall.exception.InvalidDayOfWeekException;
  * 요일 Enum
  */
 public enum DayOfWeekKOR {
-    MON("월"),
-    TUES("화"),
-    WEDS("수"),
-    THURS("목"),
-    FRI("금"),
-    SAT("토"),
-    SUN("일");
+    MON("월", false),
+    TUES("화", false),
+    WEDS("수", false),
+    THURS("목", false),
+    FRI("금", false),
+    SAT("토", true),
+    SUN("일", true);
 
     private final String dayOfWeek;
+    private final boolean isHoliday;
 
-    DayOfWeekKOR(String dayOfWeek) {
+    DayOfWeekKOR(String dayOfWeek, boolean isHoliday) {
         this.dayOfWeek = dayOfWeek;
+        this.isHoliday = isHoliday;
     }
 
     public static DayOfWeekKOR of(String dayOfWeek) {
@@ -26,7 +28,10 @@ public enum DayOfWeekKOR {
                 return day;
             }
         }
-
         throw new InvalidDayOfWeekException();
+    }
+
+    public boolean isHoliday() {
+        return this.isHoliday;
     }
 }
