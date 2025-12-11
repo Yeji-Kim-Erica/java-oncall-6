@@ -2,8 +2,6 @@ package oncall.model;
 
 import oncall.exception.InvalidNicknameException;
 
-import java.util.Objects;
-
 /**
  * 근무자 정보를 저장하는 클래스
  */

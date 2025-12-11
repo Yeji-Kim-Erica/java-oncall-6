@@ -1,0 +1,42 @@
+package oncall.controller;
+
+import oncall.model.Calendar;
+import oncall.util.InputParser;
+import oncall.view.InputView;
+import oncall.view.OutputView;
+
+import java.util.List;
+
+/**
+ * 프로그램의 전체 흐름 조율, 입출력과 로직을 연결하는 클래스
+ */
+public class Controller {
+    private final InputView inputView;
+    private final OutputView outputView;
+
+    public Controller(InputView inputView, OutputView outputView) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+    }
+
+    public void run() {
+        Calendar calendar = null;
+        do {
+            calendar = createCalendar();
+        } while (calendar == null);
+    }
+
+    private Calendar createCalendar() {
+        try {
+            outputView.printCalendarPropertyPrompt();
+            String calendarProperty = inputView.readCalendarProperty();
+            List<String> properties = InputParser.parseToStrings(calendarProperty);
+            int monthNum = InputParser.parseToInt(properties.get(0));
+            String firstDayOfMonth = properties.get(1);
+            return Calendar.of(monthNum, firstDayOfMonth);
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e);
+            return null;
+        }
+    }
+}
