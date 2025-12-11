@@ -15,8 +15,8 @@ public class Scheduler {
     public static Scheduler of(Calendar calendar, Workers weekdayWorkers, Workers holidayWorkers) {
         List<Worker> workSchedule = new ArrayList<>();
         workSchedule.add(null);
-        LinkedList<Worker> weekdayWorkersNotAssigned = getWorkers(weekdayWorkers);
-        LinkedList<Worker> holidayWorkersNotAssigned = getWorkers(holidayWorkers);
+        Deque<Worker> weekdayWorkersNotAssigned = new LinkedList<>();
+        Deque<Worker> holidayWorkersNotAssigned = new LinkedList<>();
         for (int i = 1; i <= calendar.getLastDateOfMonth(); i++) {
             DayOfWeekKOR dayOfWeek = calendar.getDayOfMonth(i);
             Worker worker = null;
@@ -32,11 +32,11 @@ public class Scheduler {
                     Worker workerOnDutyInARow = worker;
                     if (!isHoliday) {
                         worker = assignWorker(weekdayWorkersNotAssigned, weekdayWorkers);
-                        weekdayWorkersNotAssigned.addFirst(workerOnDutyInARow);
+                        weekdayWorkersNotAssigned.push(workerOnDutyInARow);
                     }
                     if (isHoliday) {
                         worker = assignWorker(holidayWorkersNotAssigned, holidayWorkers);
-                        holidayWorkersNotAssigned.addFirst(workerOnDutyInARow);
+                        holidayWorkersNotAssigned.push(workerOnDutyInARow);
                     }
                 }
             }
@@ -49,18 +49,16 @@ public class Scheduler {
         return workSchedule.get(date);
     }
 
-    private static LinkedList<Worker> getWorkers(Workers workers) {
-        LinkedList<Worker> workersNotAssigned = new LinkedList<>();
+    private static void fillWorkers(Deque<Worker> workersNotAssigned, Workers workers) {
         for (int i = 0; i < workers.size(); i++) {
             workersNotAssigned.add(workers.get(i));
         }
-        return workersNotAssigned;
     }
 
-    private static Worker assignWorker(LinkedList<Worker> workersNotAssigned, Workers workers) {
+    private static Worker assignWorker(Deque<Worker> workersNotAssigned, Workers workers) {
         if (workersNotAssigned.isEmpty()) {
-            workersNotAssigned = getWorkers(workers);
+            fillWorkers(workersNotAssigned, workers);
         }
-        return workersNotAssigned.pollFirst();
+        return workersNotAssigned.pop();
     }
 }
