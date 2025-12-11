@@ -3,6 +3,7 @@ package oncall.model;
 import oncall.exception.DuplicatedNicknameException;
 import oncall.exception.WorkersLessThanMinimumException;
 import oncall.exception.WorkersOverMaximum;
+import oncall.util.InputParser;
 
 import java.util.ArrayList;
 import java.util.HashSet;

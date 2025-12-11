@@ -1,5 +1,6 @@
 package oncall.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,9 +10,21 @@ import java.util.List;
 public final class InputParser {
     private InputParser() {}
 
+    public static String refineInput(String input) {
+        boolean isNullOrBlank = (input == null) || input.isBlank();
+        if (isNullOrBlank) {
+            throw new IllegalArgumentException();
+        }
+        return input.trim();
+    }
+
     public static List<String> parseToStrings(String input) {
         String refinedInput = refineInput(input);
-        return Arrays.stream(refinedInput.split(",")).toList();
+        List<String> strings = new ArrayList<>();
+        for (String string : refinedInput.split(",")) {
+            strings.add(refineInput(string));
+        }
+        return strings;
     }
 
     public static int parseToInt(String input) {
@@ -21,13 +34,5 @@ public final class InputParser {
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException();
         }
-    }
-
-    private static String refineInput(String input) {
-        boolean isNullOrBlank = (input == null) || input.isBlank();
-        if (isNullOrBlank) {
-            throw new IllegalArgumentException();
-        }
-        return input.trim();
     }
 }

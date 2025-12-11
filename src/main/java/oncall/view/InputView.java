@@ -9,4 +9,12 @@ public class InputView {
     public String readCalendarProperty() {
         return Console.readLine();
     }
+
+    public String readWeekdayWorkersPrompt() {
+        return Console.readLine();
+    }
+
+    public String readHolidayWorkersPrompt() {
+        return Console.readLine();
+    }
 }

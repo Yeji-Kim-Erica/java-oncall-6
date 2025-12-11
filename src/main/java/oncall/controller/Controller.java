@@ -1,6 +1,8 @@
 package oncall.controller;
 
 import oncall.model.Calendar;
+import oncall.model.Scheduler;
+import oncall.model.Workers;
 import oncall.util.InputParser;
 import oncall.view.InputView;
 import oncall.view.OutputView;
@@ -20,23 +22,40 @@ public class Controller {
     }
 
     public void run() {
-        Calendar calendar = null;
-        do {
-            calendar = createCalendar();
-        } while (calendar == null);
+        Calendar calendar = createCalendar();
+        Scheduler scheduler = createScheduler(calendar);
     }
 
     private Calendar createCalendar() {
-        try {
-            outputView.printCalendarPropertyPrompt();
-            String calendarProperty = inputView.readCalendarProperty();
-            List<String> properties = InputParser.parseToStrings(calendarProperty);
-            int monthNum = InputParser.parseToInt(properties.get(0));
-            String firstDayOfMonth = properties.get(1);
-            return Calendar.of(monthNum, firstDayOfMonth);
-        } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e);
-            return null;
+        while (true) {
+            try {
+                outputView.printCalendarPropertyPrompt();
+                String calendarProperty = inputView.readCalendarProperty();
+                List<String> properties = InputParser.parseToStrings(calendarProperty);
+                int monthNum = InputParser.parseToInt(properties.get(0));
+                String firstDayOfMonth = properties.get(1);
+                return Calendar.of(monthNum, firstDayOfMonth);
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage();
+            }
+        }
+    }
+
+    private Scheduler createScheduler(Calendar calendar) {
+        while(true) {
+            try {
+                outputView.printWeekdayWorkerNamesPrompt();
+                String weekdayWorkerNames = inputView.readWeekdayWorkersPrompt();
+                Workers weekdayWorkers = Workers.from(InputParser.parseToStrings(weekdayWorkerNames));
+
+                outputView.printHolidayWorkerNamesPrompt();
+                String holidayWorkerNames = inputView.readHolidayWorkersPrompt();
+                Workers holidayWorkers = Workers.from(InputParser.parseToStrings(holidayWorkerNames));
+
+                return Scheduler.of(calendar, weekdayWorkers, holidayWorkers);
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage();
+            }
         }
     }
 }
