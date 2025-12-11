@@ -6,11 +6,9 @@ import java.util.*;
  * 비상 근무표, 근무자 배정 로직 담당
  */
 public class Scheduler {
-    private final Calendar calendar;
     private final List<Worker> workSchedule;
 
-    private Scheduler(Calendar calendar, List<Worker> workSchedule) {
-        this.calendar = calendar;
+    private Scheduler(List<Worker> workSchedule) {
         this.workSchedule = workSchedule;
     }
 
@@ -44,7 +42,7 @@ public class Scheduler {
             }
             workSchedule.add(worker);
         }
-        return new Scheduler(calendar, workSchedule);
+        return new Scheduler(workSchedule);
     }
 
     public Worker getWorkerOnDuty(int date) {

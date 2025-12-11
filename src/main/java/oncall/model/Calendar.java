@@ -21,6 +21,10 @@ public class Calendar {
         return new Calendar(month, dayOfWeek);
     }
 
+    public int getMonth() {
+        return month.ordinal() + 1;
+    }
+
     public DayOfWeekKOR getDayOfMonth(int date) {
         return dayOfMonth.get(date - 1);
     }
@@ -38,7 +42,7 @@ public class Calendar {
         List<DayOfWeekKOR> dayOfWeek = List.of(DayOfWeekKOR.values());
         int indexOfFirstDay = firstDayOfMonth.ordinal();
         for (int i = 0; i < month.lastDateOfMonth(); i++) {
-            daysOfMonth.add(dayOfWeek.get(i%7 + indexOfFirstDay));
+            daysOfMonth.add(dayOfWeek.get((i + indexOfFirstDay)%7));
         }
         return daysOfMonth;
     }

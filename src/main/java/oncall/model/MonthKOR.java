@@ -41,6 +41,9 @@ public enum MonthKOR {
     }
 
     public boolean isHoliday(int date) {
+        if (publicHolidays == null) {
+            return false;
+        }
         return publicHolidays.contains(date);
     }
 }

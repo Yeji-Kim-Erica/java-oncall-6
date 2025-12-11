@@ -24,6 +24,7 @@ public class Controller {
     public void run() {
         Calendar calendar = createCalendar();
         Scheduler scheduler = createScheduler(calendar);
+        outputView.printWorkSchedules(calendar, scheduler);
     }
 
     private Calendar createCalendar() {

@@ -1,5 +1,9 @@
 package oncall.view;
 
+import oncall.model.Calendar;
+import oncall.model.DayOfWeekKOR;
+import oncall.model.Scheduler;
+
 /**
  * 프로그램의 모든 출력을 담당하는 클래스
  */
@@ -18,5 +22,19 @@ public class OutputView {
 
     public void printHolidayWorkerNamesPrompt() {
         System.out.print("휴일 비상 근무 순번대로 사원 닉네임을 입력하세요> ");
+    };
+
+    public void printWorkSchedules(Calendar calendar, Scheduler scheduler) {
+        int month = calendar.getMonth();
+        for (int i = 1; i <= calendar.getLastDateOfMonth(); i++) {
+            DayOfWeekKOR dayOfWeek = calendar.getDayOfMonth(i);
+            String day = dayOfWeek.toString();
+            if (!dayOfWeek.isHoliday() && calendar.isHoliday(i)) {
+                day += "(휴일)";
+            }
+            String nickname = scheduler.getWorkerOnDuty(i).toString();
+            System.out.printf("%d월 %d일 %s %s", month, i, day, nickname);
+            System.out.println();
+        }
     };
 }

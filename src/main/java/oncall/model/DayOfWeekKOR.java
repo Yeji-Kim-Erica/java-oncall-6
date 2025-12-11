@@ -31,6 +31,11 @@ public enum DayOfWeekKOR {
         throw new InvalidDayOfWeekException();
     }
 
+    @Override
+    public String toString() {
+        return this.dayOfWeek;
+    }
+
     public boolean isHoliday() {
         return this.isHoliday;
     }
